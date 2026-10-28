@@ -23,24 +23,94 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        @keyframes cinematicLight {
+            0% { opacity: 0; transform: scale(0.85); filter: brightness(0.2) blur(15px); }
+            50% { opacity: 0.8; filter: brightness(1.4) blur(5px); }
+            100% { opacity: 1; transform: scale(1); filter: brightness(1) blur(0); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.08); }
+        }
+
+        .cinematic-box {
+            animation: cinematicLight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .pulse-light {
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.86);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-nav {
+            background: rgba(10, 15, 29, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* تفاعل ألوان الثيم تلقائياً حسب الجنس */
+        body.theme-male .dynamic-theme-border {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 35px rgba(59, 130, 246, 0.45) !important;
+        }
+        body.theme-male .dynamic-theme-text {
+            color: #60a5fa !important;
+        }
+        body.theme-male .dynamic-theme-bg {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+        }
+
+        body.theme-female .dynamic-theme-border {
+            border-color: #ec4899 !important;
+            box-shadow: 0 0 35px rgba(236, 72, 153, 0.45) !important;
+        }
+        body.theme-female .dynamic-theme-text {
+            color: #f472b6 !important;
+        }
+        body.theme-female .dynamic-theme-bg {
+            background: linear-gradient(135deg, #db2777, #be185d) !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f59e0b;
+        }
+    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen relative selection:bg-amber-500 selection:text-white theme-male">
 
-    <!-- خلفية الويب الأصلية مثبتة خلف الطبقة الزجاجية -->
-    <div class="fixed inset-0 bg-cover bg-center bg-no-repeat z-0 transition-opacity duration-1000" style="background-image: url('https://i.postimg.cc/xTMVt85x/3215b0208f3c54eadd7fc84f052f93b0.jpg');"></div>
+    <!-- خلفية الموقع الرسمية المطلوبة -->
+    <div class="fixed inset-0 bg-cover bg-center bg-no-repeat z-0" style="background-image: url('https://i.postimg.cc/xTMVt85x/3215b0208f3c54eadd7fc84f052f93b0.jpg');"></div>
     <div class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-0"></div>
 
-    <!-- 1. شاشة الدخول السينمائية والتسجيل التفاعلية -->
+    <!-- شاشة تسجيل الدخول السينمائية -->
     <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 transition-all duration-700">
         <div class="glass-panel dynamic-theme-border rounded-3xl p-6 md:p-8 max-w-md w-full relative overflow-hidden text-center cinematic-box">
             
-            <!-- تأثير النور المضيء خلف الصورة -->
             <div id="glowBg" class="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl pulse-light transition-all duration-500"></div>
             <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl pulse-light"></div>
 
-            <!-- صورة الأستاذ الرسمية محاطة برسم حلقة النور التفاعلية -->
             <div class="relative w-36 h-36 mx-auto mb-5">
                 <div id="spinRing" class="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500 via-blue-500 to-amber-300 animate-spin opacity-80 blur-sm"></div>
                 <div class="relative z-10 w-full h-full rounded-full p-1 bg-slate-900 border-2 border-amber-400 shadow-2xl overflow-hidden">
@@ -97,10 +167,10 @@
         </div>
     </div>
 
-    <!-- 2. المحتوى الرئيسي للمنصة بعد التسجيل -->
+    <!-- المحتوى الرئيسي للمنصة -->
     <div id="mainApp" class="hidden opacity-0 transition-opacity duration-700 relative z-10">
         
-        <!-- شريط التنقل العلوي الزجاجي (Navbar) مع الأيقونات لكافة الخانات -->
+        <!-- شريط التنقل العلوي مع الأيقونات -->
         <header class="sticky top-0 z-40 glass-nav px-4 py-3">
             <div class="max-w-6xl mx-auto flex items-center justify-between">
                 <div class="flex items-center space-x-3 space-x-reverse">
@@ -113,7 +183,7 @@
                     </div>
                 </div>
 
-                <!-- قائمة التصفح مع أيقونات احترافية -->
+                <!-- قائمة الخانات مع الأيقونات -->
                 <nav class="hidden md:flex items-center space-x-6 space-x-reverse text-sm font-bold text-slate-200">
                     <a href="#heroSection" class="hover:text-amber-400 transition flex items-center gap-2">
                         <i class="fa-solid fa-house text-amber-400"></i> الرئيسية
@@ -132,7 +202,6 @@
                     </a>
                 </nav>
 
-                <!-- الإشعارات والخروج -->
                 <div class="flex items-center space-x-3 space-x-reverse">
                     <div class="relative">
                         <button id="bellBtn" class="p-2.5 rounded-full bg-white/5 text-slate-200 hover:bg-white/10 transition relative shadow-md">
@@ -169,7 +238,6 @@
         <!-- المحتوى الرئيسي -->
         <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
             
-            <!-- البانر الرئيسي: كارت الأستاذ + بطاقة الطالب التفاعلية والكود العشوائي -->
             <section id="heroSection" class="relative rounded-3xl p-6 md:p-8 glass-panel dynamic-theme-border">
                 <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
                     
@@ -191,7 +259,6 @@
                             "التاريخ ليس مجرد تواريخ تُحفظ، بل هو وثيقة وعي وفهم عميق تصنع عقولاً قادرة على استشراف المستقبل. أهلاً بكم في منصتكم الأولى للتفوق."
                         </p>
                         
-                        <!-- بطاقة الطالب المخصصة مع الكود العشوائي الفريد المخزن بـ LocalStorage -->
                         <div class="pt-4 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs bg-black/40 p-3.5 rounded-2xl border border-white/5">
                             <div>
                                 <span class="text-slate-400 block mb-0.5">👤 اسم الطالب:</span>
@@ -214,9 +281,8 @@
                 </div>
             </section>
 
-            <!-- 3 أقسام رئيسية جاهزة لرفع المحتوى -->
+            <!-- الأقسام الثلاثة -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
                 <div id="newsSection" class="glass-panel rounded-3xl p-6 relative overflow-hidden group hover:border-amber-400/40 transition">
                     <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
                         <h3 class="font-bold text-lg font-serif flex items-center gap-2 text-white">
@@ -255,10 +321,9 @@
                         <p>لا توجد نصائح مضافة حالياً. سيتم الرفع قريباً.</p>
                     </div>
                 </div>
-
             </div>
 
-            <!-- رابط الدخول المباشر لجروب الواتساب لطلاب البكالوريا -->
+            <!-- رابط الواتساب المباشر -->
             <section id="whatsappSection" class="bg-gradient-to-r from-emerald-600 via-teal-700 to-emerald-800 text-white rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right border border-emerald-400/30">
                 <div class="space-y-2">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 text-xs font-bold tracking-wide">
@@ -282,7 +347,128 @@
         </footer>
     </div>
 
-    <!-- ربط ملف البرمجة والتفاعل -->
-    <script src="script.js"></script>
+    <!-- كود الجافاسكريبت المدمج لضمان عمل كل الميزات -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const authModal = document.getElementById('authModal');
+            const mainApp = document.getElementById('mainApp');
+            const loginForm = document.getElementById('loginForm');
+            const studentGenderSelect = document.getElementById('studentGender');
+            const glowBg = document.getElementById('glowBg');
+            const spinRing = document.getElementById('spinRing');
+
+            const displayName = document.getElementById('displayName');
+            const displayGrade = document.getElementById('displayGrade');
+            const displayPhone = document.getElementById('displayPhone');
+            const displayUniqueCode = document.getElementById('displayUniqueCode');
+
+            const bellBtn = document.getElementById('bellBtn');
+            const notificationsDropdown = document.getElementById('notificationsDropdown');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            function updateTheme(gender) {
+                if (gender === 'female') {
+                    document.body.classList.add('theme-female');
+                    document.body.classList.remove('theme-male');
+                    if (glowBg) glowBg.className = 'absolute -top-32 -left-32 w-64 h-64 bg-pink-500/30 rounded-full blur-3xl pulse-light transition-all duration-500';
+                    if (spinRing) spinRing.className = 'absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-purple-500 to-amber-300 animate-spin opacity-80 blur-sm';
+                } else {
+                    document.body.classList.add('theme-male');
+                    document.body.classList.remove('theme-female');
+                    if (glowBg) glowBg.className = 'absolute -top-32 -left-32 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl pulse-light transition-all duration-500';
+                    if (spinRing) spinRing.className = 'absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500 via-blue-500 to-amber-300 animate-spin opacity-80 blur-sm';
+                }
+            }
+
+            studentGenderSelect.addEventListener('change', (e) => {
+                updateTheme(e.target.value);
+            });
+
+            function generateStudentCode() {
+                const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                let code = 'RQ-';
+                for (let i = 0; i < 6; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return code;
+            }
+
+            const savedStudent = localStorage.getItem('elhedawy_history_student');
+            if (savedStudent) {
+                try {
+                    const studentData = JSON.parse(savedStudent);
+                    applyUserData(studentData);
+                    authModal.classList.add('hidden');
+                    mainApp.classList.remove('hidden');
+                    setTimeout(() => {
+                        mainApp.classList.add('opacity-100');
+                    }, 50);
+                } catch (err) {
+                    console.error("Error reading saved student data", err);
+                }
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const studentName = document.getElementById('studentName').value.trim();
+                const studentGrade = document.getElementById('studentGrade').value;
+                const studentGender = studentGenderSelect.value;
+                const studentPhone = document.getElementById('studentPhone').value.trim();
+
+                const uniqueCode = generateStudentCode();
+
+                const studentData = {
+                    name: studentName,
+                    grade: studentGrade,
+                    gender: studentGender,
+                    phone: studentPhone,
+                    code: uniqueCode
+                };
+
+                localStorage.setItem('elhedawy_history_student', JSON.stringify(studentData));
+                applyUserData(studentData);
+
+                if (navigator.vibrate) {
+                    navigator.vibrate(60);
+                }
+
+                authModal.classList.add('opacity-0');
+                setTimeout(() => {
+                    authModal.classList.add('hidden');
+                    mainApp.classList.remove('hidden');
+                    setTimeout(() => {
+                        mainApp.classList.add('opacity-100');
+                    }, 50);
+                }, 400);
+            });
+
+            function applyUserData(data) {
+                displayName.textContent = data.name;
+                displayGrade.textContent = data.grade;
+                displayPhone.textContent = data.phone;
+                displayUniqueCode.textContent = data.code || generateStudentCode();
+                updateTheme(data.gender);
+            }
+
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('هل ترغب في تسجيل الخروج من حسابك؟')) {
+                    localStorage.removeItem('elhedawy_history_student');
+                    location.reload();
+                }
+            });
+
+            bellBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notificationsDropdown.classList.toggle('hidden');
+            });
+
+            window.addEventListener('click', () => {
+                if (!notificationsDropdown.classList.contains('hidden')) {
+                    notificationsDropdown.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
