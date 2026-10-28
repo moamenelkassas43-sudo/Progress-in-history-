@@ -27,8 +27,8 @@
     <style>
         /* أنيميشن الدخول السينمائي وتأثير النور */
         @keyframes cinematicLight {
-            0% { opacity: 0; transform: scale(0.8); filter: brightness(0.2) blur(20px); }
-            50% { opacity: 0.8; filter: brightness(1.5) blur(5px); }
+            0% { opacity: 0; transform: scale(0.85); filter: brightness(0.2) blur(15px); }
+            50% { opacity: 0.8; filter: brightness(1.4) blur(5px); }
             100% { opacity: 1; transform: scale(1); filter: brightness(1) blur(0); }
         }
 
@@ -47,16 +47,16 @@
 
         /* الطبقات الزجاجية Glassmorphism */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(15, 23, 42, 0.84);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
         .glass-nav {
-            background: rgba(10, 15, 29, 0.9);
+            background: rgba(10, 15, 29, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -85,7 +85,7 @@
             background: linear-gradient(135deg, #db2777, #be185d) !important;
         }
 
-        /* تحسين التمرير */
+        /* تحسين شريط التمرير */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -103,7 +103,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen relative selection:bg-amber-500 selection:text-white theme-male">
 
-    <!-- خلفية الويب الأصلية مع الطبقة الزجاجية -->
+    <!-- خلفية الويب الأصلية مع الطبقة الزجاجية التراكمية -->
     <div class="fixed inset-0 bg-cover bg-center bg-no-repeat z-0 transition-opacity duration-1000" style="background-image: url('https://i.postimg.cc/xTMVt85x/3215b0208f3c54eadd7fc84f052f93b0.jpg');"></div>
     <div class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-0"></div>
 
@@ -175,7 +175,7 @@
     <!-- 2. المحتوى الرئيسي للمنصة بعد التسجيل -->
     <div id="mainApp" class="hidden opacity-0 transition-opacity duration-700 relative z-10">
         
-        <!-- شريط التنقل العلوي الزجاجي (Navbar) -->
+        <!-- شريط التنقل العلوي الزجاجي (Navbar) مع الأيقونات لكافة الخانات -->
         <header class="sticky top-0 z-40 glass-nav px-4 py-3">
             <div class="max-w-6xl mx-auto flex items-center justify-between">
                 <div class="flex items-center space-x-3 space-x-reverse">
@@ -219,12 +219,12 @@
                         <div id="notificationsDropdown" class="hidden absolute left-0 mt-3 w-72 glass-panel rounded-2xl p-4 z-50">
                             <div class="flex justify-between items-center mb-3 border-b border-white/10 pb-2">
                                 <span class="font-bold text-sm text-amber-400">التنبيهات الإشعارية</span>
-                                <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold font-sans">جديد</span>
+                                <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full font-bold">جديد</span>
                             </div>
                             <div class="space-y-3 text-xs">
                                 <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
                                     <p class="font-bold text-amber-400 mb-0.5">ترحيب خاص 🎉</p>
-                                    <p class="text-slate-300">مرحباً بك في منصة تاريخ الرقي الرسمية للاستاذ محمد الجداوي.</p>
+                                    <p class="text-slate-300">مرحباً بك في منصة تاريخ الرقي الرسمية للأستاذ محمد الجداوي.</p>
                                 </div>
                                 <div class="p-2.5 rounded-xl bg-white/5 border border-white/5">
                                     <p class="font-bold text-blue-400 mb-0.5">مواعيد البكالوريا 📚</p>
@@ -357,7 +357,7 @@
         </footer>
     </div>
 
-    <!-- برمجة المنصة والجافاسكريبت المباشر -->
+    <!-- برمجة المنصة بالجافاسكريبت المباشر -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const authModal = document.getElementById('authModal');
