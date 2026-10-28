@@ -2,11 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const authModal = document.getElementById('authModal');
     const mainApp = document.getElementById('mainApp');
     const loginForm = document.getElementById('loginForm');
-    
-    const studentNameInput = document.getElementById('studentName');
-    const studentGradeInput = document.getElementById('studentGrade');
-    const studentGenderInput = document.getElementById('studentGender');
-    const studentPhoneInput = document.getElementById('studentPhone');
+    const studentGenderSelect = document.getElementById('studentGender');
+    const glowBg = document.getElementById('glowBg');
+    const spinRing = document.getElementById('spinRing');
 
     const displayName = document.getElementById('displayName');
     const displayGrade = document.getElementById('displayGrade');
@@ -17,8 +15,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationsDropdown = document.getElementById('notificationsDropdown');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    function generateUniqueCode() {
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    // 1. تغيير الثيم تلقائياً وفورياً عند اختيار الجنس (ولد / بنت)
+    function updateTheme(gender) {
+        if (gender === 'female') {
+            document.body.classList.add('theme-female');
+            document.body.classList.remove('theme-male');
+            if (glowBg) glowBg.className = 'absolute -top-32 -left-32 w-64 h-64 bg-pink-500/30 rounded-full blur-3xl pulse-light transition-all duration-500';
+            if (spinRing) spinRing.className = 'absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-purple-500 to-amber-300 animate-spin opacity-80 blur-sm';
+        } else {
+            document.body.classList.add('theme-male');
+            document.body.classList.remove('theme-female');
+            if (glowBg) glowBg.className = 'absolute -top-32 -left-32 w-64 h-64 bg-blue-500/30 rounded-full blur-3xl pulse-light transition-all duration-500';
+            if (spinRing) spinRing.className = 'absolute inset-0 rounded-full bg-gradient-to-tr from-amber-500 via-blue-500 to-amber-300 animate-spin opacity-80 blur-sm';
+        }
+    }
+
+    studentGenderSelect.addEventListener('change', (e) => {
+        updateTheme(e.target.value);
+    });
+
+    // 2. توليد كود عشوائي فريد لكل طالب (RQ-XXXXXX)
+    function generateStudentCode() {
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
         let code = 'RQ-';
         for (let i = 0; i < 6; i++) {
             code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -26,33 +44,47 @@ document.addEventListener('DOMContentLoaded', () => {
         return code;
     }
 
-    const savedUser = localStorage.getItem('history_student_data');
-    if (savedUser) {
-        const userData = JSON.parse(savedUser);
-        applyUserData(userData);
-        authModal.classList.add('hidden');
-        mainApp.classList.remove('hidden');
-        mainApp.classList.add('opacity-100');
+    // 3. التحقق من وجود تسجيل سابق محفوط في LocalStorage
+    const savedStudent = localStorage.getItem('elhedawy_history_student');
+    if (savedStudent) {
+        try {
+            const studentData = JSON.parse(savedStudent);
+            applyUserData(studentData);
+            authModal.classList.add('hidden');
+            mainApp.classList.remove('hidden');
+            setTimeout(() => {
+                mainApp.classList.add('opacity-100');
+            }, 50);
+        } catch (err) {
+            console.error("Error reading saved student data", err);
+        }
     }
 
+    // 4. معالجة نموذج التسجيل وتأكيد البيانات
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        let uniqueCode = generateUniqueCode();
+        const studentName = document.getElementById('studentName').value.trim();
+        const studentGrade = document.getElementById('studentGrade').value;
+        const studentGender = studentGenderSelect.value;
+        const studentPhone = document.getElementById('studentPhone').value.trim();
 
-        const userData = {
-            name: studentNameInput.value.trim(),
-            grade: studentGradeInput.value,
-            gender: studentGenderInput.value,
-            phone: studentPhoneInput.value.trim(),
+        const uniqueCode = generateStudentCode();
+
+        const studentData = {
+            name: studentName,
+            grade: studentGrade,
+            gender: studentGender,
+            phone: studentPhone,
             code: uniqueCode
         };
 
-        localStorage.setItem('history_student_data', JSON.stringify(userData));
-        applyUserData(userData);
+        localStorage.setItem('elhedawy_history_student', JSON.stringify(studentData));
+
+        applyUserData(studentData);
 
         if (navigator.vibrate) {
-            navigator.vibrate(70);
+            navigator.vibrate(60);
         }
 
         authModal.classList.add('opacity-0');
@@ -62,32 +94,27 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 mainApp.classList.add('opacity-100');
             }, 50);
-        }, 500);
+        }, 400);
     });
 
+    // 5. تطبيق بيانات الطالب بالواجهة
     function applyUserData(data) {
         displayName.textContent = data.name;
         displayGrade.textContent = data.grade;
         displayPhone.textContent = data.phone;
-        displayUniqueCode.textContent = data.code || generateUniqueCode();
-
-        // تفعيل تغيير الألوان الفوري حسب الجنس
-        if (data.gender === 'female') {
-            document.body.classList.add('theme-female');
-            document.body.classList.remove('theme-male');
-        } else {
-            document.body.classList.add('theme-male');
-            document.body.classList.remove('theme-female');
-        }
+        displayUniqueCode.textContent = data.code || generateStudentCode();
+        updateTheme(data.gender);
     }
 
+    // 6. تسجيل الخروج مسح LocalStorage
     logoutBtn.addEventListener('click', () => {
-        if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
-            localStorage.removeItem('history_student_data');
+        if (confirm('هل ترغب في تسجيل الخروج من حسابك؟')) {
+            localStorage.removeItem('elhedawy_history_student');
             location.reload();
         }
     });
 
+    // 7. زر الإشعارات المنسدلة
     bellBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         notificationsDropdown.classList.toggle('hidden');
