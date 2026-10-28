@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationsDropdown = document.getElementById('notificationsDropdown');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // توليد كود عشوائي فريد لكل طالب
+    // توليد كود عشوائي فريد لكل مستخدم (حتى لو ألف مستخدم)
     function generateUniqueCode() {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let code = 'RQ-';
@@ -37,11 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.classList.add('opacity-100');
     }
 
-    // معالجة نموذج التسجيل وحفظ بيانات الطالب والكود الفريد
+    // معالجة نموذج التسجيل وحفظ البيانات والكود الفريد للخادم المحلي
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // التحقق من وجود كود سابق أو إنشاء كود عشوائي فريد جديد
         let uniqueCode = generateUniqueCode();
 
         const userData = {
@@ -52,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
             code: uniqueCode
         };
 
-        // تخزين البيانات في الخادم (LocalStorage) لكي لا يسجل مرة أخرى
+        // تخزين البيانات لكي لا يضطر الطالب للتسجيل في كل مرة
         localStorage.setItem('history_student_data', JSON.stringify(userData));
 
         applyUserData(userData);
 
         if (navigator.vibrate) {
-            navigator.vibrate(60);
+            navigator.vibrate(70);
         }
 
         authModal.classList.add('opacity-0');
