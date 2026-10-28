@@ -28,11 +28,11 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen selection:bg-amber-500 selection:text-white">
 
-    <!-- خلفية الويب مع رابط الصورة الذي أرسلته وطبقة التعتيم الزجاجية -->
+    <!-- خلفية الموقع المباشرة مع الطبقة الزجاجية -->
     <div class="fixed inset-0 bg-cover bg-center bg-no-repeat z-0" style="background-image: url('https://i.postimg.cc/xTMVt85x/3215b0208f3c54eadd7fc84f052f93b0.jpg');"></div>
     <div class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-0"></div>
 
-    <!-- شاشة تسجيل الدخول السينمائية -->
+    <!-- شاشة تسجيل الدخول السينمائية الفخمة -->
     <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 transition-all duration-700">
         <div class="glass-card border border-white/10 rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative overflow-hidden text-center cinematic-reveal">
             
@@ -89,8 +89,8 @@
     <!-- المحتوى الرئيسي للمنصة -->
     <div id="mainApp" class="hidden opacity-0 transition-opacity duration-700 relative z-10">
         
-        <!-- شريط التنقل العلوي الاحترافي -->
-        <header class="sticky top-0 z-40 glass-nav border-b border-white/10 px-4 py-3.5 shadow-lg">
+        <!-- شريط التنقل العلوي الاحترافي مع الأيقونات لكل الخانات -->
+        <header class="sticky top-0 z-40 glass-nav border-b border-white/10 px-4 py-3.5 shadow-xl">
             <div class="max-w-6xl mx-auto flex items-center justify-between">
                 <div class="flex items-center space-x-3 space-x-reverse">
                     <div class="w-11 h-11 rounded-full border-2 border-amber-400 overflow-hidden shadow-xl">
@@ -102,12 +102,13 @@
                     </div>
                 </div>
 
-                <!-- قائمة التنقل العلوية -->
+                <!-- قائمة الخانات مع الأيقونات -->
                 <nav class="hidden md:flex items-center space-x-6 space-x-reverse text-sm font-bold text-slate-300">
-                    <a href="#heroSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-house"></i> الرئيسية</a>
-                    <a href="#newsSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-bullhorn"></i> الأخبار</a>
-                    <a href="#videosSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-video"></i> الفيديوهات</a>
-                    <a href="#tipsSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-lightbulb"></i> النصائح</a>
+                    <a href="#heroSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-house text-amber-400"></i> الرئيسية</a>
+                    <a href="#newsSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-bullhorn text-amber-400"></i> الأخبار</a>
+                    <a href="#videosSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-video text-blue-400"></i> الفيديوهات</a>
+                    <a href="#tipsSection" class="hover:text-amber-400 transition flex items-center gap-1.5"><i class="fa-solid fa-lightbulb text-amber-400"></i> النصائح</a>
+                    <a href="#whatsappSection" class="hover:text-emerald-400 transition flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-400"></i> الواتساب</a>
                 </nav>
 
                 <div class="flex items-center space-x-3 space-x-reverse">
@@ -212,7 +213,7 @@
             </div>
 
             <!-- رابط الواتساب المباشر -->
-            <section class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right border border-emerald-400/20">
+            <section id="whatsappSection" class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right border border-emerald-400/20">
                 <div class="space-y-2">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 text-xs font-bold tracking-wide">
                         <i class="fa-brands fa-whatsapp text-lg"></i> مجموعة البكالوريا الرسمية
