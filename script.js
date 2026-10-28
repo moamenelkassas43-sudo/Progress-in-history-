@@ -11,13 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayName = document.getElementById('displayName');
     const displayGrade = document.getElementById('displayGrade');
     const displayPhone = document.getElementById('displayPhone');
+    const displayUniqueCode = document.getElementById('displayUniqueCode');
 
-    const themeToggle = document.getElementById('themeToggle');
-    const logoutBtn = document.getElementById('logoutBtn');
     const bellBtn = document.getElementById('bellBtn');
     const notificationsDropdown = document.getElementById('notificationsDropdown');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-    // التحقق من وجود تسجيل سابق محفوط على الخادم (المتصفح)
+    // توليد كود عشوائي فريد لكل طالب
+    function generateUniqueCode() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = 'RQ-';
+        for (let i = 0; i < 6; i++) {
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return code;
+    }
+
+    // التحقق مما إذا كان الطالب مسجلاً مسبقاً في الخادم المحلي (LocalStorage)
     const savedUser = localStorage.getItem('history_student_data');
     if (savedUser) {
         const userData = JSON.parse(savedUser);
@@ -27,22 +37,28 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.classList.add('opacity-100');
     }
 
-    // تسجيل البيانات وحفظها تلقائياً
+    // معالجة نموذج التسجيل وحفظ بيانات الطالب والكود الفريد
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
+        // التحقق من وجود كود سابق أو إنشاء كود عشوائي فريد جديد
+        let uniqueCode = generateUniqueCode();
+
         const userData = {
             name: studentNameInput.value.trim(),
             grade: studentGradeInput.value,
             gender: studentGenderInput.value,
-            phone: studentPhoneInput.value.trim()
+            phone: studentPhoneInput.value.trim(),
+            code: uniqueCode
         };
 
+        // تخزين البيانات في الخادم (LocalStorage) لكي لا يسجل مرة أخرى
         localStorage.setItem('history_student_data', JSON.stringify(userData));
+
         applyUserData(userData);
 
         if (navigator.vibrate) {
-            navigator.vibrate(50);
+            navigator.vibrate(60);
         }
 
         authModal.classList.add('opacity-0');
@@ -52,14 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 mainApp.classList.add('opacity-100');
             }, 50);
-        }, 300);
+        }, 500);
     });
 
     function applyUserData(data) {
         displayName.textContent = data.name;
         displayGrade.textContent = data.grade;
         displayPhone.textContent = data.phone;
+        displayUniqueCode.textContent = data.code || generateUniqueCode();
 
+        // تطبيق الثيم التلقائي حسب الجنس
         if (data.gender === 'female') {
             document.body.classList.add('theme-female');
             document.body.classList.remove('theme-male');
@@ -77,24 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // الوضع الليلي والنهاري
-    themeToggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        if (html.classList.contains('dark')) {
-            html.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-        } else {
-            html.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        }
-    });
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.remove('dark');
-    }
-
-    // قائمة الجرس والتنبيهات
+    // قائمة التنبيهات
     bellBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         notificationsDropdown.classList.toggle('hidden');
