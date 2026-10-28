@@ -1,0 +1,47 @@
+/* تنسيقات إضافية ومؤثرات حركية فائقة الدقة */
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.animate-spin-slow {
+    animation: spinSlow 12s linear infinite;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* تخصيص الثيمات حسب اختيار الجنس (ولد: أزرق ملكي / بنت: وردي فاخر) */
+body.theme-male {
+    --accent-color: #3b82f6;
+}
+
+body.theme-female {
+    --accent-color: #ec4899;
+}
+
+/* تأثيرات تفاعلية ناعمة للبطاقات والأزرار */
+button, .group {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* تحسين التمرير والشكل العام */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+}
