@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const bellBtn = document.getElementById('bellBtn');
     const notificationsDropdown = document.getElementById('notificationsDropdown');
 
-    // تحقق مما إذا كان الطالب مسجلاً مسبقاً
+    // التحقق من وجود تسجيل سابق محفوط على الخادم (المتصفح)
     const savedUser = localStorage.getItem('history_student_data');
     if (savedUser) {
         const userData = JSON.parse(savedUser);
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.classList.add('opacity-100');
     }
 
-    // معالجة نموذج تسجيل الدخول
+    // تسجيل البيانات وحفظها تلقائياً
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -38,18 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: studentPhoneInput.value.trim()
         };
 
-        // حفظ البيانات
         localStorage.setItem('history_student_data', JSON.stringify(userData));
-
-        // تطبيق البيانات والثيم
         applyUserData(userData);
 
-        // اهتزاز خفيف للأزرار للتفاعل (Haptic / Micro-feedback)
         if (navigator.vibrate) {
             navigator.vibrate(50);
         }
 
-        // إخفاء نافذة التسجيل وإظهار المنصة بانسيابية
         authModal.classList.add('opacity-0');
         setTimeout(() => {
             authModal.classList.add('hidden');
@@ -65,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayGrade.textContent = data.grade;
         displayPhone.textContent = data.phone;
 
-        // تطبيق لون الثيم حسب الجنس (ولد -> أزرق، بنت -> وردي)
         if (data.gender === 'female') {
             document.body.classList.add('theme-female');
             document.body.classList.remove('theme-male');
@@ -83,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // تبديل الوضع الليلي والنهاري (Dark / Light Mode)
+    // الوضع الليلي والنهاري
     themeToggle.addEventListener('click', () => {
         const html = document.documentElement;
         if (html.classList.contains('dark')) {
@@ -95,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // التحقق من الثيم المحفوظ مسبقاً للوضع الليلي
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
         document.documentElement.classList.remove('dark');
@@ -107,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         notificationsDropdown.classList.toggle('hidden');
     });
 
-    // إغلاق قائمة التنبيهات عند النقر في أي مكان خارجي
     window.addEventListener('click', () => {
         if (!notificationsDropdown.classList.contains('hidden')) {
             notificationsDropdown.classList.add('hidden');
