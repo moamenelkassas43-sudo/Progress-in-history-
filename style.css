@@ -17,31 +17,30 @@
     animation: cinematicReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* طبقات الزجاج الشفاف الفاخر المتجاوبة مع الثيمات */
 .glass-card {
-    background: rgba(15, 23, 42, 0.82);
+    background: rgba(15, 23, 42, 0.84);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-color: var(--theme-border, rgba(255, 255, 255, 0.1));
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px var(--theme-glow, rgba(245, 158, 11, 0.15));
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 35px var(--theme-glow, rgba(245, 158, 11, 0.2));
 }
 
 .glass-nav {
-    background: rgba(15, 23, 42, 0.9);
+    background: rgba(15, 23, 42, 0.92);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
 }
 
-/* ثيم الأولاد (أزرق ملكي متألق) */
+/* ثيم الأولاد (أزرق ملكي ساطع) */
 body.theme-male {
-    --theme-border: rgba(59, 130, 246, 0.3);
-    --theme-glow: rgba(59, 130, 246, 0.35);
+    --theme-border: rgba(59, 130, 246, 0.4);
+    --theme-glow: rgba(59, 130, 246, 0.45);
 }
 
-/* ثيم البنات (وردي ملكي فاخر) */
+/* ثيم البنات (وردي ملكي فخم) */
 body.theme-female {
-    --theme-border: rgba(236, 72, 153, 0.3);
-    --theme-glow: rgba(236, 72, 153, 0.35);
+    --theme-border: rgba(236, 72, 153, 0.4);
+    --theme-glow: rgba(236, 72, 153, 0.45);
 }
 
 button, .group, input, select {
