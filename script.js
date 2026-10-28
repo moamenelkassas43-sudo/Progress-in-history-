@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const notificationsDropdown = document.getElementById('notificationsDropdown');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // توليد كود عشوائي فريد لكل مستخدم (حتى لو ألف مستخدم)
     function generateUniqueCode() {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let code = 'RQ-';
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return code;
     }
 
-    // التحقق مما إذا كان الطالب مسجلاً مسبقاً في الخادم المحلي (LocalStorage)
     const savedUser = localStorage.getItem('history_student_data');
     if (savedUser) {
         const userData = JSON.parse(savedUser);
@@ -37,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mainApp.classList.add('opacity-100');
     }
 
-    // معالجة نموذج التسجيل وحفظ البيانات والكود الفريد للخادم المحلي
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
@@ -51,9 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             code: uniqueCode
         };
 
-        // تخزين البيانات لكي لا يضطر الطالب للتسجيل في كل مرة
         localStorage.setItem('history_student_data', JSON.stringify(userData));
-
         applyUserData(userData);
 
         if (navigator.vibrate) {
@@ -76,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPhone.textContent = data.phone;
         displayUniqueCode.textContent = data.code || generateUniqueCode();
 
-        // تطبيق الثيم التلقائي حسب الجنس
+        // تفعيل تغيير الألوان الفوري حسب الجنس
         if (data.gender === 'female') {
             document.body.classList.add('theme-female');
             document.body.classList.remove('theme-male');
@@ -86,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // زر تسجيل الخروج
     logoutBtn.addEventListener('click', () => {
         if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
             localStorage.removeItem('history_student_data');
@@ -94,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // قائمة التنبيهات
     bellBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         notificationsDropdown.classList.toggle('hidden');
