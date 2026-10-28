@@ -1,43 +1,57 @@
+/* مؤثرات حركية سينمائية وزجاجية */
 @keyframes spinSlow {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+@keyframes cinematicIn {
+    0% { opacity: 0; transform: scale(0.9); filter: brightness(0); }
+    50% { opacity: 0.5; filter: brightness(1.5); }
+    100% { opacity: 1; transform: scale(1); filter: brightness(1); }
 }
 
 .animate-spin-slow {
-    animation: spinSlow 12s linear infinite;
+    animation: spinSlow 15s linear infinite;
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.4s ease-out forwards;
+.cinematic-reveal {
+    animation: cinematicIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* طبقات الزجاج الشفاف (Glassmorphism) */
+.glass-card {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-nav {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* تخصيص الثيمات التلقائية حسب جنس الطالب */
 body.theme-male {
-    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.4);
 }
 
 body.theme-female {
-    --accent-color: #ec4899;
+    --accent-glow: rgba(236, 72, 153, 0.4);
 }
 
 button, .group {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* تنسيق شريط التمرير */
 ::-webkit-scrollbar {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #0f172a;
 }
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 9999px;
-}
-.dark ::-webkit-scrollbar-thumb {
     background: #334155;
+    border-radius: 9999px;
 }
